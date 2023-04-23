@@ -2,7 +2,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="p-3">
       <Container fluid>
         <Row>
           <Col>
