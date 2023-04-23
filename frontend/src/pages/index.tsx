@@ -84,6 +84,7 @@ export default function Index() {
           price={product.price}
           type={product.type}
           megabytes={product.megabytes}
+          weight={product.weight}
           width={product.width}
           height={product.height}
           depth={product.depth}
