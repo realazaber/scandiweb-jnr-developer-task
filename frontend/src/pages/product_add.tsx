@@ -38,7 +38,7 @@ export default function ProductAdd() {
 
   return (
     <Row className="justify-content-center">
-      <Col xs={12} md={8}>
+      <Col xs={8}>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="sku">
             <Form.Label>SKU</Form.Label>
