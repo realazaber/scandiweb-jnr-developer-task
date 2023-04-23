@@ -3,10 +3,10 @@ import { Container, Row, Col } from "react-bootstrap";
 export default function Footer() {
   return (
     <footer>
-      <Container>
+      <Container fluid>
         <Row>
           <Col>
-            <h1>Scandiweb Test Assignment</h1>
+            <h2 className="text-center">Scandiweb Test Assignment</h2>
           </Col>
         </Row>
       </Container>
