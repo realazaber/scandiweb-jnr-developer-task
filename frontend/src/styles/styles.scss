@@ -1,6 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
 
-
 * {
   transition-duration: 300ms;
 }
@@ -14,21 +13,15 @@ html {
 
     nav {
       .container {
-
         .brand {
           :hover {
             color: lightgray !important;
           }
         }
 
-        .justify-content-end {
-          a {
-            margin: 0px 3px 3px 0px;
-          }
+        .btn {
+          margin: 0px 3px 3px 0px;
         }
-      }
-      button {
-        border: 5px solid red;
       }
     }
 
