@@ -51,7 +51,7 @@ export default function ProductAdd() {
           </Form.Group>
 
           <Form.Group controlId="price">
-            <Form.Label>Price</Form.Label>
+            <Form.Label>Price $</Form.Label>
             <Form.Control
               type="number"
               value={price}
@@ -85,7 +85,7 @@ export default function ProductAdd() {
           {type === "Furniture" && (
             <>
               <Form.Group controlId="width">
-                <Form.Label>Width</Form.Label>
+                <Form.Label>Width cm</Form.Label>
                 <Form.Control
                   type="number"
                   value={width}
@@ -94,7 +94,7 @@ export default function ProductAdd() {
                 />
               </Form.Group>
               <Form.Group controlId="height">
-                <Form.Label>Height</Form.Label>
+                <Form.Label>Height cm</Form.Label>
                 <Form.Control
                   type="number"
                   value={height}
@@ -103,7 +103,7 @@ export default function ProductAdd() {
                 />
               </Form.Group>
               <Form.Group controlId="depth">
-                <Form.Label>Depth</Form.Label>
+                <Form.Label>Depth cm</Form.Label>
                 <Form.Control
                   type="number"
                   value={depth}
@@ -116,7 +116,7 @@ export default function ProductAdd() {
 
           {type === "Book" && (
             <Form.Group controlId="weight">
-              <Form.Label>Weight</Form.Label>
+              <Form.Label>Weight kg</Form.Label>
               <Form.Control
                 type="number"
                 value={weight}
