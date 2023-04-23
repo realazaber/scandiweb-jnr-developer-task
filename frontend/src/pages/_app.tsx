@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import "../styles/styles.scss";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 import { Col, Container, Row } from "react-bootstrap";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Nav />
         </Col>
       </Row>
-      <Row>
+      <Row id="main" className="my-3">
         <Col>
           <Component {...pageProps} />
         </Col>
