@@ -8,17 +8,17 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Container fluid>
       <Row>
-        <Col xs={12}>
+        <Col>
           <Nav />
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col>
           <Component {...pageProps} />
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col>
           <Footer />
         </Col>
       </Row>
