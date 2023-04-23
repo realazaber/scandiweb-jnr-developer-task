@@ -1,0 +1,39 @@
+@import "~bootstrap/scss/bootstrap";
+
+
+* {
+  transition-duration: 300ms;
+}
+
+html {
+  body {
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    nav {
+      .container {
+
+        .brand {
+          :hover {
+            color: lightgray !important;
+          }
+        }
+
+        .justify-content-end {
+          a {
+            margin: 0px 3px 3px 0px;
+          }
+        }
+      }
+      button {
+        border: 5px solid red;
+      }
+    }
+
+    footer {
+      border-top: 1px solid lightgray;
+    }
+  }
+}
