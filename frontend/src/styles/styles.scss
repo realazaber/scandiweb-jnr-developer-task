@@ -55,7 +55,7 @@ html {
     }
 
     .product {
-      height: 11rem;
+      min-height: 11rem;
       
       :hover {
         cursor: pointer;
