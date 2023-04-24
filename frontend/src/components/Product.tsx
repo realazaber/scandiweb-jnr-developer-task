@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, Col } from "react-bootstrap";
 
 export default function Product(props) {
@@ -18,6 +18,19 @@ export default function Product(props) {
     }
     localStorage.setItem("selectedProducts", JSON.stringify(savedProducts));
   };
+
+  useEffect(() => {
+    try {
+      let productsStr = localStorage.getItem("selectedProducts");
+      let productsArr = JSON.parse(productsStr);
+
+      productsArr.forEach((sku) => {
+        if (sku == props.sku) {
+          setIsChecked(true);
+        }
+      });
+    } catch {}
+  }, []);
 
   let details;
   if (props.type === "DVD") {
