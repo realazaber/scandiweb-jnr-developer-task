@@ -1,25 +1,15 @@
 <?php
 
-class Config
+class Config extends PDO
 {
     private $host = "localhost";
     private $dbName = "scandiweb_test_task";
     private $username = "root";
     private $password = "";
-    private $connection;
 
-    public function connect()
+    public function __construct()
     {
-
-        $this->connection = null;
-        try {
-            $this->connection = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbName, $this->username, $this->password);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected";
-        } catch (PDOException $error) {
-            echo 'Database error: ' . $error;
-        }
-
-        return $this->connection;
+        parent::__construct('mysql:host=' . $this->host . ';dbname=' . $this->dbName, $this->username, $this->password);
+        $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 }
