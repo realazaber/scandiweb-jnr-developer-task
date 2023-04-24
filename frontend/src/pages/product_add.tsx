@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { baseUrl } from "@/helper";
+import Link from "next/link";
 
 export default function ProductAdd() {
   const [sku, setSku] = useState("");
@@ -50,8 +51,14 @@ export default function ProductAdd() {
               </Alert>
             );
           } else {
-            setMessage(<Alert variant="success">Product added.</Alert>);
-            console.log("new product", data);
+            setMessage(
+              <Alert variant="success">
+                Product added.
+                <Link href="/">
+                  <Button variant="success">Back to home</Button>
+                </Link>
+              </Alert>
+            );
           }
         })
         .catch((error) => {
@@ -88,7 +95,6 @@ export default function ProductAdd() {
               required
             />
           </Form.Group>
-
           <Form.Group controlId="price">
             <Form.Label>Price $</Form.Label>
             <Form.Control
@@ -169,6 +175,11 @@ export default function ProductAdd() {
             Add Product
           </Button>
         </Form>
+        <Link href="/">
+          <Button variant="warning" className="text-white">
+            Cancel
+          </Button>
+        </Link>
         {message}
       </Col>
     </Row>
