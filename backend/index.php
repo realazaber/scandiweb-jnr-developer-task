@@ -1,5 +1,12 @@
 <?php
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+    exit;
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -76,8 +83,6 @@ class ProductAPI
 
     private function addProduct()
     {
-        header('Content-Type: application/json');
-
         // Get request body
         $request_body = file_get_contents('php://input');
         $data = json_decode($request_body, true);
@@ -104,7 +109,7 @@ class ProductAPI
             case 'DVD':
                 if (!isset($data['megabytes'])) {
                     http_response_code(400);
-                    echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+                    echo json_encode(array('success' => false, 'message' => 'Megabytes is blank'));
                     return;
                 }
                 $product = new DVD(null, $data['sku'], $data['name'], $data['price'], $data['megabytes']);
@@ -112,7 +117,7 @@ class ProductAPI
             case 'book':
                 if (!isset($data['weight'])) {
                     http_response_code(400);
-                    echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+                    echo json_encode(array('success' => false, 'message' => 'Weight is blank'));
                     return;
                 }
                 $product = new Book(null, $data['sku'], $data['name'], $data['price'], $data['weight']);
@@ -120,7 +125,7 @@ class ProductAPI
             case 'furniture':
                 if (!isset($data['width']) || !isset($data['depth']) || !isset($data['height'])) {
                     http_response_code(400);
-                    echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+                    echo json_encode(array('success' => false, 'message' => 'Dimension fields are blank'));
                     return;
                 }
                 $product = new Furniture(null, $data['sku'], $data['name'], $data['price'], $data['width'], $data['depth'], $data['height']);
