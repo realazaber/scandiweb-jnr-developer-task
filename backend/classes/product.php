@@ -2,6 +2,7 @@
 
 abstract class Product
 {
+    private $id;
     private $sku;
     private $name;
     private $price;
@@ -13,6 +14,18 @@ abstract class Product
         $this->name = $name;
         $this->price = $price;
         $this->type = $type;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'sku' => $this->sku,
+            'name' => $this->name,
+            'price' => $this->price,
+            'type' => $this->type,
+
+        ];
     }
 
     public function getSku()
