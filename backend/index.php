@@ -76,10 +76,85 @@ class ProductAPI
 
     private function addProduct()
     {
-        // TODO: implement addProduct method
-        http_response_code(501);
-        echo json_encode(array('success' => false, 'message' => 'Not implemented'));
+        header('Content-Type: application/json');
+
+        // Get request body
+        $request_body = file_get_contents('php://input');
+        $data = json_decode($request_body, true);
+
+        // Check if all required fields are present
+        if (!isset($data['sku']) || !isset($data['name']) || !isset($data['price']) || !isset($data['type'])) {
+            http_response_code(400);
+            echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+            return;
+        }
+
+        // Check if product with same SKU already exists
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM products WHERE sku = ?");
+        $stmt->execute([$data['sku']]);
+        $count = $stmt->fetchColumn();
+        if ($count > 0) {
+            http_response_code(409);
+            echo json_encode(array('success' => false, 'message' => 'Product with same SKU already exists'));
+            return;
+        }
+
+        // Create new product instance based on product type
+        switch ($data['type']) {
+            case 'DVD':
+                if (!isset($data['megabytes'])) {
+                    http_response_code(400);
+                    echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+                    return;
+                }
+                $product = new DVD(null, $data['sku'], $data['name'], $data['price'], $data['megabytes']);
+                break;
+            case 'book':
+                if (!isset($data['weight'])) {
+                    http_response_code(400);
+                    echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+                    return;
+                }
+                $product = new Book(null, $data['sku'], $data['name'], $data['price'], $data['weight']);
+                break;
+            case 'furniture':
+                if (!isset($data['width']) || !isset($data['depth']) || !isset($data['height'])) {
+                    http_response_code(400);
+                    echo json_encode(array('success' => false, 'message' => 'Missing required fields'));
+                    return;
+                }
+                $product = new Furniture(null, $data['sku'], $data['name'], $data['price'], $data['width'], $data['depth'], $data['height']);
+                break;
+            default:
+                http_response_code(400);
+                echo json_encode(array('success' => false, 'message' => 'Invalid product type'));
+                return;
+        }
+
+        // Insert product into database
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO products (sku, name, price, type, megabytes, weight, width, depth, height) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            if ($product instanceof DVD) {
+                $stmt->execute([$product->getSku(), $product->getName(), $product->getPrice(), $product->getType(), $product->getMegabytes(), null, null, null, null]);
+            } elseif ($product instanceof Book) {
+                $stmt->execute([$product->getSku(), $product->getName(), $product->getPrice(), $product->getType(), null, $product->getWeight(), null, null, null]);
+            } elseif ($product instanceof Furniture) {
+                $stmt->execute([$product->getSku(), $product->getName(), $product->getPrice(), $product->getType(), null, null, $product->getWidth(), $product->getDepth(), $product->getHeight()]);
+            } else {
+                http_response_code(400);
+                echo json_encode(array('success' => false, 'message' => 'Invalid product type'));
+                return;
+            }
+
+            http_response_code(201);
+            echo json_encode(array('success' => true, 'data' => $product->toArray()));
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array('success' => false, 'message' => 'Error adding product: ' . $e->getMessage()));
+        }
     }
+
 
     private function deleteProduct()
     {
