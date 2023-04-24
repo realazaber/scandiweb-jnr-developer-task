@@ -4,6 +4,21 @@ import { Card, Col } from "react-bootstrap";
 export default function Product(props) {
   const [isChecked, setIsChecked] = useState(false);
 
+  const handleCardClick = () => {
+    setIsChecked(!isChecked);
+    const savedProducts =
+      JSON.parse(localStorage.getItem("selectedProducts")) || [];
+    if (!isChecked) {
+      savedProducts.push(props.sku);
+    } else {
+      const index = savedProducts.indexOf(props.sku);
+      if (index > -1) {
+        savedProducts.splice(index, 1);
+      }
+    }
+    localStorage.setItem("selectedProducts", JSON.stringify(savedProducts));
+  };
+
   let details;
   if (props.type === "DVD") {
     details = <h6>Megabytes {props.megabytes}</h6>;
@@ -16,10 +31,6 @@ export default function Product(props) {
       </h6>
     );
   }
-
-  const handleCardClick = () => {
-    setIsChecked(!isChecked);
-  };
 
   return (
     <Col xs={6} sm={4} md={3} className="m-1">
