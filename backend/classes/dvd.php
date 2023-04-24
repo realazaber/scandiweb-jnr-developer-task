@@ -23,12 +23,12 @@ class DVD extends Product
         $array['megabytes'] = $this->megabytes;
     }
 
-    public function getMegabyte()
+    public function getMegabytes()
     {
         return $this->megabytes;
     }
 
-    public function setMegabyte($megabytes)
+    public function setMegabytes($megabytes)
     {
         $this->megabytes = $megabytes;
     }
