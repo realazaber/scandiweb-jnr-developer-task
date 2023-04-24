@@ -52,13 +52,13 @@ class ProductAPI
                 $product = null;
                 switch ($row['type']) {
                     case 'DVD':
-                        $product = new DVD($row['sku'], $row['name'], $row['price'], $row['megabytes']);
+                        $product = new DVD($row['id'], $row['sku'], $row['name'], $row['price'], $row['megabytes']);
                         break;
                     case 'book':
-                        $product = new Book($row['sku'], $row['name'], $row['price'], $row['weight']);
+                        $product = new Book($row['id'], $row['sku'], $row['name'], $row['price'], $row['weight']);
                         break;
                     case 'furniture':
-                        $product = new Furniture($row['sku'], $row['name'], $row['price'], $row['width'], $row['depth'], $row['height']);
+                        $product = new Furniture($row['id'], $row['sku'], $row['name'], $row['price'], $row['width'], $row['depth'], $row['height']);
                         break;
                 }
 

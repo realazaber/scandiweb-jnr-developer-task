@@ -8,8 +8,9 @@ abstract class Product
     private $price;
     private $type;
 
-    public function __construct($sku, $name, $price, $type)
+    public function __construct($id, $sku, $name, $price, $type)
     {
+        $this->id = $id;
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
@@ -18,15 +19,20 @@ abstract class Product
 
     public function toArray()
     {
-        return [
+        $array = [
             'id' => $this->id,
             'sku' => $this->sku,
             'name' => $this->name,
             'price' => $this->price,
             'type' => $this->type,
-
         ];
+
+        $this->addProductSpecificProperties($array);
+
+        return $array;
     }
+
+    abstract protected function addProductSpecificProperties(&$array);
 
     public function getSku()
     {

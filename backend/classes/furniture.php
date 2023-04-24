@@ -4,15 +4,28 @@ require_once 'product.php';
 class Furniture extends Product
 {
     private $width;
-    private $height;
     private $depth;
+    private $height;
 
-    public function __construct($sku, $name, $price, $width, $height, $depth)
+    public function __construct($id, $sku, $name, $price, $width, $depth, $height)
     {
-        parent::__construct($sku, $name, $price, "Furniture");
+        parent::__construct($id, $sku, $name, $price, 'furniture');
         $this->width = $width;
-        $this->height = $height;
         $this->depth = $depth;
+        $this->height = $height;
+    }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        return $array;
+    }
+
+    protected function addProductSpecificProperties(&$array)
+    {
+        $array['width'] = $this->width;
+        $array['depth'] = $this->depth;
+        $array['height'] = $this->height;
     }
 
     public function getWidth()
