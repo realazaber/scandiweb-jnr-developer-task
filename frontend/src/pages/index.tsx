@@ -2,14 +2,13 @@ import Product from "@/components/Product";
 import { Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { IProduct } from "@/interfaces/Product";
+import { baseUrl } from "@/helper";
 
 export default function Index() {
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    fetch(
-      "http://localhost/projects/scandiweb-jnr-developer-task/backend/products"
-    )
+    fetch(baseUrl + "/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.data);
