@@ -1,5 +1,10 @@
 <?php
 
+require_once("config.php");
+
+$connection = new Config();
+$connection->connect();
+
 $baseUrl = "/projects/scandiweb-jnr-developer-task/backend";
 
 //Get products URL
