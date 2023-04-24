@@ -4,8 +4,34 @@ import Navbar from "react-bootstrap/Navbar";
 import { Button, Col, Row } from "react-bootstrap";
 
 import Link from "next/link";
+import { baseUrl } from "@/helper";
 
 export default function CustomNav() {
+  const deleteProducts = () => {
+    let productsStr = localStorage.getItem("selectedProducts");
+    let productsArr = JSON.parse(productsStr);
+
+    if (productsArr.length <= 0) {
+      alert("Please select at least one product");
+    } else {
+      productsArr.forEach((prodSku) => {
+        console.log("prod: ", prodSku);
+        fetch(baseUrl + "/products", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sku: prodSku }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.error(err));
+      });
+      localStorage.removeItem("selectedProducts");
+      window.location.reload();
+    }
+  };
+
   return (
     <Navbar bg="dark" variant="dark" className="d-flex justify-content-center">
       <Nav className="w-100">
@@ -19,7 +45,9 @@ export default function CustomNav() {
                 <Button variant="success">Add</Button>
               </Link>
               <Link href="/">
-                <Button variant="danger">Mass Delete</Button>
+                <Button onClick={deleteProducts} variant="danger">
+                  Mass Delete
+                </Button>
               </Link>
             </Col>
           </Row>
