@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
+import { baseUrl } from "@/helper";
 
 export default function ProductAdd() {
   const [sku, setSku] = useState("");
+  const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
   const [megabytes, setMegabytes] = useState("");
@@ -22,17 +24,44 @@ export default function ProductAdd() {
     if (type == "") {
       setMessage(<Alert variant="danger">Please select a type.</Alert>);
     } else {
-      setMessage(<Alert variant="success">Product added.</Alert>);
-      console.log({
-        sku,
-        price,
-        type,
-        megabytes,
-        width,
-        height,
-        depth,
-        weight,
-      });
+      fetch(baseUrl + "/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sku,
+          name,
+          price,
+          type,
+          megabytes,
+          width,
+          height,
+          depth,
+          weight,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success == false) {
+            setMessage(
+              <Alert variant="danger">
+                A product with the same SKU already exists.
+              </Alert>
+            );
+          } else {
+            setMessage(<Alert variant="success">Product added.</Alert>);
+            console.log("new product", data);
+          }
+        })
+        .catch((error) => {
+          setMessage(
+            <Alert variant="danger">
+              An error occurred while adding the product.
+            </Alert>
+          );
+          console.error(error);
+        });
     }
   };
 
@@ -47,6 +76,15 @@ export default function ProductAdd() {
               type="text"
               value={sku}
               onChange={(event) => setSku(event.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               required
             />
           </Form.Group>
@@ -66,8 +104,8 @@ export default function ProductAdd() {
             <Form.Control as="select" value={type} onChange={handleTypeChange}>
               <option value="">Select a type</option>
               <option value="DVD">DVD</option>
-              <option value="Furniture">Furniture</option>
-              <option value="Book">Book</option>
+              <option value="furniture">Furniture</option>
+              <option value="book">Book</option>
             </Form.Control>
           </Form.Group>
 
@@ -83,7 +121,7 @@ export default function ProductAdd() {
             </Form.Group>
           )}
 
-          {type === "Furniture" && (
+          {type === "furniture" && (
             <>
               <Form.Group controlId="width">
                 <Form.Label>Width cm</Form.Label>
@@ -115,7 +153,7 @@ export default function ProductAdd() {
             </>
           )}
 
-          {type === "Book" && (
+          {type === "book" && (
             <Form.Group controlId="weight">
               <Form.Label>Weight kg</Form.Label>
               <Form.Control
