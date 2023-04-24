@@ -163,9 +163,33 @@ class ProductAPI
 
     private function deleteProduct()
     {
-        // TODO: implement deleteProduct method
-        http_response_code(501);
-        echo json_encode(array('success' => false, 'message' => 'Not implemented'));
+        // Get request body
+        $request_body = file_get_contents('php://input');
+        $data = json_decode($request_body, true);
+
+        // Check if the SKU field is present
+        if (!isset($data['sku'])) {
+            http_response_code(400);
+            echo json_encode(array('success' => false, 'message' => 'Missing required field: SKU'));
+            return;
+        }
+
+        // Delete the product with the given SKU from the database
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM products WHERE sku = ?");
+            $stmt->execute([$data['sku']]);
+            $count = $stmt->rowCount();
+            if ($count == 0) {
+                http_response_code(404);
+                echo json_encode(array('success' => false, 'message' => 'Product not found'));
+                return;
+            }
+            http_response_code(200);
+            echo json_encode(array('success' => true, 'message' => 'Product deleted successfully'));
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array('success' => false, 'message' => 'Error deleting product: ' . $e->getMessage()));
+        }
     }
 }
 
