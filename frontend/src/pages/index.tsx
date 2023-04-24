@@ -17,20 +17,24 @@ export default function Index() {
 
   return (
     <Row className="justify-content-center">
-      {products.map((product) => (
-        <Product
-          key={product.id}
-          sku={product.sku}
-          name={product.name}
-          price={product.price}
-          type={product.type}
-          megabytes={product.megabytes}
-          weight={product.weight}
-          width={product.width}
-          height={product.height}
-          depth={product.depth}
-        />
-      ))}
+      {products.length === 0 ? (
+        <h2 className="text-center">Please add a product</h2>
+      ) : (
+        products.map((product) => (
+          <Product
+            key={product.id}
+            sku={product.sku}
+            name={product.name}
+            price={product.price}
+            type={product.type}
+            megabytes={product.megabytes}
+            weight={product.weight}
+            width={product.width}
+            height={product.height}
+            depth={product.depth}
+          />
+        ))
+      )}
     </Row>
   );
 }
