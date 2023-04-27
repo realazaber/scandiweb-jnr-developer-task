@@ -11,14 +11,14 @@ export default function CustomNav() {
   const router = useRouter();
   const deleteProducts = () => {
     try {
-      let productsStr = localStorage.getItem("selectedProducts");
-      let productsArr = JSON.parse(productsStr);
+      let productsStr: any = localStorage.getItem("selectedProducts");
+      let productsArr: any = JSON.parse(productsStr);
 
       if (productsArr.length <= 0) {
         alert("Please select at least one product");
       } else {
         Promise.all(
-          productsArr.map((prodSku) =>
+          productsArr.map((prodSku: any) =>
             fetch(baseUrl + "/products", {
               method: "DELETE",
               headers: {
