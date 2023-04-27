@@ -2,11 +2,13 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button, Col, Row } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 import { baseUrl } from "@/helper";
 
 export default function CustomNav() {
+  const router = useRouter();
   const deleteProducts = () => {
     try {
       let productsStr = localStorage.getItem("selectedProducts");
@@ -15,23 +17,27 @@ export default function CustomNav() {
       if (productsArr.length <= 0) {
         alert("Please select at least one product");
       } else {
-        productsArr.forEach((prodSku) => {
-          console.log("prod: ", prodSku);
-          fetch(baseUrl + "/products", {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ sku: prodSku }),
+        Promise.all(
+          productsArr.map((prodSku) =>
+            fetch(baseUrl + "/products", {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ sku: prodSku }),
+            }).then((res) => res.json())
+          )
+        )
+          .then((data) => {
+            console.log(data);
+            localStorage.removeItem("selectedProducts");
+            router.push("/refresh");
           })
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.error(err));
-        });
-        localStorage.removeItem("selectedProducts");
-        window.location.reload();
+          .catch((err) => console.error(err));
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const clearSelected = () => {
