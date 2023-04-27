@@ -22,7 +22,7 @@ CREATE TABLE products (
   height DECIMAL(10,2)
 );
 
-INSERT INTO scandiweb_test_task.products (sku, name, price, type, weight, megabytes, width, depth, height)
+INSERT INTO products (sku, name, price, type, weight, megabytes, width, depth, height)
 VALUES 
     ('DVD001', 'DVD Movie', 10.99, 'DVD', NULL, 700, NULL, NULL, NULL),
     ('BOOK001', 'Book', 15.99, 'book', 1.5, NULL, NULL, NULL, NULL),
