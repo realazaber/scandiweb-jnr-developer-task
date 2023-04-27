@@ -5,7 +5,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
 
 import Link from "next/link";
-import { baseUrl } from "@/helper";
+import { baseUrl } from "../helper";
 
 export default function CustomNav() {
   const router = useRouter();
@@ -37,6 +37,7 @@ export default function CustomNav() {
       }
     } catch (error) {
       console.error(error);
+      alert("Please select at least one product");
     }
   };
 

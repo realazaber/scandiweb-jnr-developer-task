@@ -31,7 +31,7 @@ export default function Product(props: any) {
         }
       });
     } catch {}
-  }, []);
+  }, [props.sku]);
 
   let details;
   if (props.type === "DVD") {

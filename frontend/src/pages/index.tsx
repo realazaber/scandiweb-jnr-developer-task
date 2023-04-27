@@ -1,8 +1,8 @@
-import Product from "@/components/Product";
+import Product from "../components/Product";
 import { Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { IProduct } from "@/interfaces/Product";
-import { baseUrl } from "@/helper";
+import { IProduct } from "../interfaces/Product";
+import { baseUrl } from "../helper";
 
 export default function Index() {
   const [products, setProducts] = useState<IProduct[]>([]);

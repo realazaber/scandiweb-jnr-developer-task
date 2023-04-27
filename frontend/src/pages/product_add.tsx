@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
-import { baseUrl } from "@/helper";
+import { baseUrl } from "../helper";
 import Link from "next/link";
 
 export default function ProductAdd() {
