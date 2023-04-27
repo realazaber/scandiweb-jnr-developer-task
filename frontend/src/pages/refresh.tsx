@@ -6,7 +6,7 @@ export default function Refresh() {
 
   useEffect(() => {
     router.push("/");
-  }, []);
+  }, [router]);
 
   return null;
 }
