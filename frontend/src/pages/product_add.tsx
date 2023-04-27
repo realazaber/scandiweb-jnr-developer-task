@@ -15,11 +15,11 @@ export default function ProductAdd() {
   const [weight, setWeight] = useState("");
   const [message, setMessage] = useState(<div></div>);
 
-  const handleTypeChange = (event: any) => {
+  const handleTypeChange = (event) => {
     setType(event.target.value);
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     if (type == "") {

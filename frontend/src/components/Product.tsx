@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Card, Col } from "react-bootstrap";
 
-export default function Product(props: any) {
+export default function Product(props) {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCardClick = () => {
     setIsChecked(!isChecked);
     const savedProducts =
-      JSON.parse(localStorage.getItem("selectedProducts") || "") || [];
+      JSON.parse(localStorage.getItem("selectedProducts")) || [];
     if (!isChecked) {
       savedProducts.push(props.sku);
     } else {
@@ -22,9 +22,9 @@ export default function Product(props: any) {
   useEffect(() => {
     try {
       let productsStr = localStorage.getItem("selectedProducts");
-      let productsArr = JSON.parse(productsStr || "");
+      let productsArr = JSON.parse(productsStr);
 
-      productsArr.forEach((sku: string) => {
+      productsArr.forEach((sku) => {
         if (sku == props.sku) {
           setIsChecked(true);
         }
