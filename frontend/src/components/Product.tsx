@@ -61,7 +61,7 @@ export default function Product(props: any) {
           <h3>{props.sku}</h3>
           <h4>{props.name}</h4>
           <h5>${props.price}</h5>
-          {details}
+          <span>{details}</span>
         </Card.Body>
       </Card>
     </Col>
