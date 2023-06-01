@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .vert-align {
@@ -12,9 +13,13 @@
   align-items: center;
 }
 
-html {
-  body {
 
+
+html {
+
+  overflow-y: visible !important;
+  body {
+    
     #main {
       min-height: 70vh;
       display: flex;
